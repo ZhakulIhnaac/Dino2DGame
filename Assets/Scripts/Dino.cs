@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Dino : MonoBehaviour
 {
@@ -8,18 +9,23 @@ public class Dino : MonoBehaviour
     private Rigidbody2D rb;
     private PolygonCollider2D col;
     public bool gameIsOn;
+    private int scoreValue;
+    public Text score;
     private void Start()
     {
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<PolygonCollider2D>();
         gameIsOn = true;
+        scoreValue = 0;
     }
     // Update is called once per frame
     void Update()
     {
         if (gameIsOn)
         {
+            score.text = "Score: " + scoreValue;
+
             if (rb.velocity.y != 0)
             {
                 anim.SetBool("isJumping", false);
@@ -34,6 +40,7 @@ public class Dino : MonoBehaviour
             {
                 rb.velocity += 10f * Vector2.up;
                 anim.SetBool("isJumping", true);
+                scoreValue += 10;
             }
 
             if (Input.GetKeyDown(KeyCode.Space))
